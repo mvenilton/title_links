@@ -24,7 +24,7 @@ def search_link(doctype, txt, query=None, filters=None, page_len=20, searchfield
 def search_title(doctype, name):
     meta = frappe.get_meta(doctype)
     if meta.title_field:
-        return name, frappe.db.get_value(doctype, name, meta.title_field or 'name'), meta.title_field
+        return name, frappe._(frappe.db.get_value(doctype, name, meta.title_field or 'name')), meta.title_field
     else:
         return name, name, meta.title_field
 
@@ -142,7 +142,8 @@ def build_for_autosuggest(res):
     results = []
     for r in res:
         print r
-        out = {"value": r[0], "description": ", ".join(unique(cstr(d) for d in r if d)[0:])}
+        #out = {"value": r[0], "description": ", ".join(unique(cstr(d) for d in r if d)[0:])}
+        out = {"value": r[0], "description": frappe._(r[2]) }
         results.append(out)
 
     return results
